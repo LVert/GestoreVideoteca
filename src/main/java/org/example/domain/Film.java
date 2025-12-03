@@ -26,7 +26,6 @@ public class Film {
         this.statoVisione = statoVisione;
     }
 
-    // --- Getter & Setter ---
 
     public String getTitolo() {
         return titolo;
