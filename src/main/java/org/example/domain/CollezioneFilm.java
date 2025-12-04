@@ -3,6 +3,7 @@ package org.example.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CollezioneFilm {
 
@@ -53,9 +54,16 @@ public class CollezioneFilm {
         return films.stream().filter(f -> f.getRegista().toLowerCase().contains(regista.toLowerCase())).toList();
     }
 
+    public List<Film> filtra(FiltraStrategy filtro) {
+        return films.stream()
+                .filter(filtro::filtra)
+                .collect(Collectors.toList());
+    }
 
-
-
-
+    public List<Film> ordina(OrdinamentoStrategy ordinamento) {
+        return films.stream()
+                .sorted(ordinamento.ordina())
+                .collect(Collectors.toList());
+    }
 
 }

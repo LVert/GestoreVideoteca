@@ -133,18 +133,18 @@ public class CollezioneFilmTest {
         CollezioneFilm collezione = new CollezioneFilm();
 
         Film film1 = new FilmBuilder()
-                .titolo("Il Signore degli Anelli: La Compagnia dell'Anello")
+                .titolo("Il Signore degli Anelli: Le Due Torri")
                 .regista("Peter Jackson")
-                .annoUscita(2001)
+                .annoUscita(2002)
                 .genere(Genere.FANTASY)
                 .valutazione(5)
                 .stato(StatoVisione.VISTO)
                 .build();
 
         Film film2 = new FilmBuilder()
-                .titolo("Il Signore degli Anelli: Le Due Torri")
+                .titolo("Il Signore degli Anelli: La Compagnia dell'Anello")
                 .regista("Peter Jackson")
-                .annoUscita(2002)
+                .annoUscita(2001)
                 .genere(Genere.FANTASY)
                 .valutazione(5)
                 .stato(StatoVisione.VISTO)
@@ -169,27 +169,28 @@ public class CollezioneFilmTest {
         assertTrue(trovati.contains(film1));
         assertTrue(trovati.contains(film2));
         assertFalse(trovati.contains(film3));
+
     }
 
     @Test
-    public void cercaPerRegista(){
+    public void cercaPerRegistaTest(){
         CollezioneFilm collezione = new CollezioneFilm();
 
         Film film1 = new FilmBuilder()
-                .titolo("Pulp Fiction")
-                .regista("Quentin Tarantino")
-                .annoUscita(1994)
-                .genere(Genere.DRAMMA)
-                .valutazione(5)
-                .stato(StatoVisione.VISTO)
-                .build();
-
-        Film film2 = new FilmBuilder()
                 .titolo("Kill Bill")
                 .regista("Quentin Tarantino")
                 .annoUscita(2003)
                 .genere(Genere.AZIONE)
                 .valutazione(4)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        Film film2 = new FilmBuilder()
+                .titolo("Pulp Fiction")
+                .regista("Quentin Tarantino")
+                .annoUscita(1994)
+                .genere(Genere.DRAMMA)
+                .valutazione(5)
                 .stato(StatoVisione.VISTO)
                 .build();
 
@@ -212,6 +213,136 @@ public class CollezioneFilmTest {
         assertTrue(trovati.contains(film1));
         assertTrue(trovati.contains(film2));
         assertFalse(trovati.contains(film3));
+
     }
 
+    @Test
+    public void ordinaPerTitoloTest(){
+
+        CollezioneFilm collezione = new CollezioneFilm();
+
+        Film film1 = new FilmBuilder()
+                .titolo("Il Signore degli Anelli: Le Due Torri")
+                .regista("Peter Jackson")
+                .annoUscita(2002)
+                .genere(Genere.FANTASY)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        Film film2 = new FilmBuilder()
+                .titolo("Il Signore degli Anelli: La Compagnia dell'Anello")
+                .regista("Peter Jackson")
+                .annoUscita(2001)
+                .genere(Genere.FANTASY)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        Film film3 = new FilmBuilder()
+                .titolo("Harry Potter e la Pietra Filosofale")
+                .regista("Chris Columbus")
+                .annoUscita(2001)
+                .genere(Genere.FANTASY)
+                .valutazione(4)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        collezione.aggiungiFilm(film1);
+        collezione.aggiungiFilm(film2);
+        collezione.aggiungiFilm(film3);
+
+        OrdinamentoStrategy ordinaPerTitolo = new OrdinamentoPerTitolo();
+        List<Film> trovati = collezione.ordina(ordinaPerTitolo);
+
+        assertEquals(trovati.get(0), film3);
+        assertEquals(trovati.get(1), film2);
+        assertEquals(trovati.get(2), film1);
+
+    }
+
+    @Test
+    public void ordinaPerAnnoTest(){
+        CollezioneFilm collezione = new CollezioneFilm();
+
+        Film film1 = new FilmBuilder()
+                .titolo("Kill Bill")
+                .regista("Quentin Tarantino")
+                .annoUscita(2003)
+                .genere(Genere.AZIONE)
+                .valutazione(4)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        Film film2 = new FilmBuilder()
+                .titolo("Pulp Fiction")
+                .regista("Quentin Tarantino")
+                .annoUscita(1994)
+                .genere(Genere.DRAMMA)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        Film film3 = new FilmBuilder()
+                .titolo("The Departed")
+                .regista("Martin Scorsese")
+                .annoUscita(2006)
+                .genere(Genere.DRAMMA)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        collezione.aggiungiFilm(film1);
+        collezione.aggiungiFilm(film2);
+        collezione.aggiungiFilm(film3);
+
+        OrdinamentoStrategy ordinaPerAnno =  new OrdinamentoPerAnno();
+        List<Film> trovati = collezione.ordina(ordinaPerAnno);
+
+        assertEquals(trovati.get(0), film2);
+        assertEquals(trovati.get(1), film1);
+        assertEquals(trovati.get(2), film3);
+    }
+
+    @Test
+    public void filtraPerGenereTest(){
+        CollezioneFilm collezione = new CollezioneFilm();
+
+        Film film1 = new FilmBuilder()
+                .titolo("Il Signore degli Anelli: La Compagnia dell'Anello")
+                .regista("Peter Jackson")
+                .annoUscita(2001)
+                .genere(Genere.FANTASY)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        Film film2 = new FilmBuilder()
+                .titolo("The Matrix")
+                .regista("The Wachowskis")
+                .annoUscita(1999)
+                .genere(Genere.AZIONE)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        Film film3 = new FilmBuilder()
+                .titolo("Pulp Fiction")
+                .regista("Quentin Tarantino")
+                .annoUscita(1994)
+                .genere(Genere.DRAMMA)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        collezione.aggiungiFilm(film1);
+        collezione.aggiungiFilm(film2);
+        collezione.aggiungiFilm(film3);
+
+        FiltraStrategy filtroPerGenere = new FiltroPerGenere(Genere.FANTASY);
+        List<Film> filmsFiltrati = collezione.filtra(filtroPerGenere);
+
+        assertEquals(1, filmsFiltrati.size());
+        assertTrue(filmsFiltrati.contains(film1));
+    }
 }
