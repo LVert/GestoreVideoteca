@@ -1,7 +1,12 @@
 package org.example.domain;
 
 import org.junit.Test;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import static org.junit.Assert.*;
 
@@ -345,4 +350,175 @@ public class CollezioneFilmTest {
         assertEquals(1, filmsFiltrati.size());
         assertTrue(filmsFiltrati.contains(film1));
     }
+
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
+
+    @Test
+    public void salvaECaricaDaRepositoryJsonTest() throws IOException {
+
+        // repo su file temporaneo
+        File jsonFile = tempFolder.newFile("videoteca_test.json");
+        FilmRepository repo = new JsonFilmRepository(jsonFile.getAbsolutePath());
+
+        // collezione 1 -> salva
+        CollezioneFilm collezione1 = new CollezioneFilm();
+
+        Film f1 = new FilmBuilder()
+                .titolo("Matrix")
+                .regista("The Wachowskis")
+                .annoUscita(1999)
+                .genere(Genere.AZIONE)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        Film f2 = new FilmBuilder()
+                .titolo("Inception")
+                .regista("Christopher Nolan")
+                .annoUscita(2010)
+                .genere(Genere.THRILLER)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        collezione1.aggiungiFilm(f1);
+        collezione1.aggiungiFilm(f2);
+
+        collezione1.salvaSuRepository(repo);
+
+        // collezione 2 -> carica
+        CollezioneFilm collezione2 = new CollezioneFilm();
+        collezione2.caricaDaRepository(repo);
+
+        assertEquals(2, collezione2.getTutti().size());
+        assertTrue(collezione2.getTutti().contains(f1));
+        assertTrue(collezione2.getTutti().contains(f2));
+    }
+
+    @Test
+    public void caricaDaRepositoryJsvESostituisceContenutoTest() throws IOException {
+
+        File jsonFile = tempFolder.newFile("videoteca_replace.json");
+        FilmRepository repo = new JsonFilmRepository(jsonFile.getAbsolutePath());
+
+        Film salvato = new FilmBuilder()
+                .titolo("Pulp Fiction")
+                .regista("Quentin Tarantino")
+                .annoUscita(1994)
+                .genere(Genere.DRAMMA)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        // preparo un file JSON con 1 film
+        CollezioneFilm collezioneSalvataggio = new CollezioneFilm();
+        collezioneSalvataggio.aggiungiFilm(salvato);
+        collezioneSalvataggio.salvaSuRepository(repo);
+
+        // collezione target parte con un altro film
+        CollezioneFilm collezioneTarget = new CollezioneFilm();
+        Film diverso = new FilmBuilder()
+                .titolo("Film Diverso")
+                .regista("Regista Diverso")
+                .annoUscita(2000)
+                .genere(Genere.ALTRO)
+                .valutazione(3)
+                .stato(StatoVisione.DA_VEDERE)
+                .build();
+        collezioneTarget.aggiungiFilm(diverso);
+
+        assertEquals(1, collezioneTarget.getTutti().size());
+        assertTrue(collezioneTarget.getTutti().contains(diverso));
+
+        // ora carico dal repo: deve rimpiazzare
+        collezioneTarget.caricaDaRepository(repo);
+
+        assertEquals(1, collezioneTarget.getTutti().size());
+        assertTrue(collezioneTarget.getTutti().contains(salvato));
+        assertFalse(collezioneTarget.getTutti().contains(diverso));
+    }
+
+    @Test
+    public void salvaECaricaDaRepositoryCsvTest() throws IOException {
+
+        File csvFile = tempFolder.newFile("videoteca_test.csv");
+        FilmRepository repo = new CsvFilmRepository(csvFile.getAbsolutePath());
+
+        CollezioneFilm collezione1 = new CollezioneFilm();
+
+        Film f1 = new FilmBuilder()
+                .titolo("Matrix")
+                .regista("The Wachowskis")
+                .annoUscita(1999)
+                .genere(Genere.AZIONE)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        Film f2 = new FilmBuilder()
+                .titolo("Inception")
+                .regista("Christopher Nolan")
+                .annoUscita(2010)
+                .genere(Genere.THRILLER)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        collezione1.aggiungiFilm(f1);
+        collezione1.aggiungiFilm(f2);
+
+        collezione1.salvaSuRepository(repo);
+
+        CollezioneFilm collezione2 = new CollezioneFilm();
+        collezione2.caricaDaRepository(repo);
+
+        assertEquals(2, collezione2.getTutti().size());
+        assertTrue(collezione2.getTutti().contains(f1));
+        assertTrue(collezione2.getTutti().contains(f2));
+    }
+
+    @Test
+    public void caricaDaRepositoryCsvESostituisceContenutoTest() throws IOException {
+
+        File csvFile = tempFolder.newFile("videoteca_replace.csv");
+        FilmRepository repo = new CsvFilmRepository(csvFile.getAbsolutePath());
+
+        Film salvato = new FilmBuilder()
+                .titolo("Pulp Fiction")
+                .regista("Quentin Tarantino")
+                .annoUscita(1994)
+                .genere(Genere.DRAMMA)
+                .valutazione(5)
+                .stato(StatoVisione.VISTO)
+                .build();
+
+        // creo il file con 1 film
+        CollezioneFilm collezioneSalvataggio = new CollezioneFilm();
+        collezioneSalvataggio.aggiungiFilm(salvato);
+        collezioneSalvataggio.salvaSuRepository(repo);
+
+        // collezione target parte con un altro film
+        CollezioneFilm collezioneTarget = new CollezioneFilm();
+        Film diverso = new FilmBuilder()
+                .titolo("Film Diverso")
+                .regista("Regista Diverso")
+                .annoUscita(2000)
+                .genere(Genere.ALTRO)
+                .valutazione(3)
+                .stato(StatoVisione.DA_VEDERE)
+                .build();
+        collezioneTarget.aggiungiFilm(diverso);
+
+        assertEquals(1, collezioneTarget.getTutti().size());
+        assertTrue(collezioneTarget.getTutti().contains(diverso));
+
+        // carico dal repo: deve rimpiazzare
+        collezioneTarget.caricaDaRepository(repo);
+
+        assertEquals(1, collezioneTarget.getTutti().size());
+        assertTrue(collezioneTarget.getTutti().contains(salvato));
+        assertFalse(collezioneTarget.getTutti().contains(diverso));
+    }
+
 }

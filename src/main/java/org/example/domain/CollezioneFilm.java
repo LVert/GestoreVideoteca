@@ -1,5 +1,6 @@
 package org.example.domain;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,4 +67,20 @@ public class CollezioneFilm {
                 .collect(Collectors.toList());
     }
 
+    public void salvaSuRepository(FilmRepository repository) throws IOException {
+        if (repository == null) {
+            throw new IllegalArgumentException("Repository nulla");
+        }
+        // salvo uno snapshot della collezione (evito modifiche accidentali dall'esterno)
+        repository.salva(List.copyOf(films));
+    }
+
+    public void caricaDaRepository(FilmRepository repository) throws IOException {
+        if (repository == null) {
+            throw new IllegalArgumentException("Repository nulla");
+        }
+        List<Film> caricati = repository.carica();
+        films.clear();
+        films.addAll(caricati);
+    }
 }
