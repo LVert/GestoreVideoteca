@@ -22,8 +22,11 @@ public class CsvFilmRepository implements FilmRepository{
 
     @Override
     public void salva(List<Film> films) throws IOException {
+        System.out.println("Tentativo di salvataggio avviato...");
+        System.out.println("Numero di film ricevuti dal repository: " + films.size());
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
             for (Film f : films) {
+                System.out.println("Scrittura film: " + f.getTitolo());
                 String line = String.join(";",
                         escape(f.getTitolo()),
                         escape(f.getRegista()),
