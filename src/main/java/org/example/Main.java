@@ -24,10 +24,6 @@ public class Main {
         });
     }
 
-    /**
-     * Carica i dati da videoteca.json E da videoteca.csv, unendoli.
-     * Grazie a collezione.aggiungiFilm(), i duplicati vengono gestiti automaticamente.
-     */
     private static void caricaDatiAllAvvio(CollezioneFilm collezione) {
         Path pathJson = Path.of("videoteca.json");
         Path pathCsv = Path.of("videoteca.csv");
@@ -40,9 +36,9 @@ public class Main {
                 for (Film f : filmCaricati) {
                     collezione.aggiungiFilm(f); // Usa aggiungi invece di caricaDaRepository per non pulire la lista
                 }
-                System.out.println("LOG: Importati " + filmCaricati.size() + " film da videoteca.json");
+                System.out.println(" Importati " + filmCaricati.size() + " film da videoteca.json");
             } catch (IOException e) {
-                System.err.println("LOG: Errore caricamento JSON: " + e.getMessage());
+                System.err.println(" Errore caricamento JSON: " + e.getMessage());
             }
         }
 
@@ -58,14 +54,14 @@ public class Main {
                         nuoviAggiunti++;
                     }
                 }
-                System.out.println("LOG: Importati " + nuoviAggiunti + " nuovi film da videoteca.csv (saltati duplicati).");
+
             } catch (IOException e) {
-                System.err.println("LOG: Errore caricamento CSV: " + e.getMessage());
+                System.err.println(" Errore caricamento CSV: " + e.getMessage());
             }
         }
 
         if (!Files.exists(pathJson) && !Files.exists(pathCsv)) {
-            System.out.println("LOG: Nessun file trovato. Collezione vuota.");
+            System.out.println(" Nessun file trovato. Collezione vuota.");
         }
     }
 }

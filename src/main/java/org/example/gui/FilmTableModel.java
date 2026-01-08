@@ -12,7 +12,7 @@ public class FilmTableModel extends AbstractTableModel {
     private List<Film> data = new ArrayList<>();
 
     public void setFilms(List<Film> films) {
-        this.data = new ArrayList<>(films);
+        this.data = films;
         fireTableDataChanged();
     }
 
@@ -53,4 +53,6 @@ public class FilmTableModel extends AbstractTableModel {
     public List<Film> getFilms() {
         return new ArrayList<>(data);
     }
+
+
 }
