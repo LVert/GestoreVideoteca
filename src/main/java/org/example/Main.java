@@ -17,7 +17,6 @@ public class Main {
 
             CollezioneFilm collezione = new CollezioneFilm();
 
-            // --- LOGICA DI CARICAMENTO AUTOMATICO (ENTRAMBI I FILE) ---
             caricaDatiAllAvvio(collezione);
 
             VideotecaFrame frame = new VideotecaFrame(collezione);
@@ -33,7 +32,7 @@ public class Main {
         Path pathJson = Path.of("videoteca.json");
         Path pathCsv = Path.of("videoteca.csv");
 
-        // 1. Tenta il caricamento dal file JSON
+        //Tenta il caricamento dal file JSON
         if (Files.exists(pathJson)) {
             try {
                 FilmRepository repoJson = new JsonFilmRepository("videoteca.json");
@@ -47,7 +46,7 @@ public class Main {
             }
         }
 
-        // 2. Tenta il caricamento dal file CSV (senza sovrascrivere il JSON)
+        //Tenta il caricamento dal file CSV (senza sovrascrivere il JSON)
         if (Files.exists(pathCsv)) {
             try {
                 FilmRepository repoCsv = new CsvFilmRepository("videoteca.csv");

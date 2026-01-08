@@ -69,16 +69,28 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
 
                 if (scelta == JOptionPane.YES_OPTION) {
                     try {
+                        // 1. Identifica il tipo selezionato e il repository
+                        TipoPersistenza tipoScelto = (TipoPersistenza) formatoBox.getSelectedItem();
                         FilmRepository repo = repositorySelezionata();
+
+                        // 2. Salva la collezione nel formato attuale
                         collezione.salvaSuRepository(repo);
+
+                        // 3. LOGICA DI MIGRAZIONE: Elimina il file del formato non utilizzato
+                        if (tipoScelto == TipoPersistenza.JSON) {
+                            java.nio.file.Files.deleteIfExists(java.nio.file.Path.of("videoteca.csv"));
+                        } else if (tipoScelto == TipoPersistenza.CSV) {
+                            java.nio.file.Files.deleteIfExists(java.nio.file.Path.of("videoteca.json"));
+                        }
+
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(
                                 VideotecaFrame.this,
-                                "Errore durante il salvataggio: " + ex.getMessage(),
+                                "Errore durante il salvataggio o la migrazione: " + ex.getMessage(),
                                 "Errore",
                                 JOptionPane.ERROR_MESSAGE
                         );
-                        return;
+                        return; // Non chiudere l'app se il salvataggio fallisce
                     }
                 }
 
@@ -283,11 +295,25 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
 
         saveBtn.addActionListener(e -> {
             try {
+                 //Identifico il tipo selezionato nella JComboBox
+                TipoPersistenza tipoScelto = (TipoPersistenza) formatoBox.getSelectedItem();
                 FilmRepository repo = repositorySelezionata();
+
+                //Salvo nel formato attuale (copia i dati dalla RAM al file)
                 collezione.salvaSuRepository(repo);
-                JOptionPane.showMessageDialog(this, "Salvataggio completato.");
+
+                //Logica di Migrazione: svuoto/elimino l'altro formato
+                if (tipoScelto == TipoPersistenza.JSON) {
+                    java.nio.file.Files.deleteIfExists(java.nio.file.Path.of("videoteca.csv"));
+                    System.out.println("Salvataggio JSON completato. File CSV rimosso.");
+                } else {
+                    java.nio.file.Files.deleteIfExists(java.nio.file.Path.of("videoteca.json"));
+                    System.out.println("Salvataggio CSV completato. File JSON rimosso.");
+                }
+
+
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Errore salvataggio: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Errore durante il salvataggio: " + ex.getMessage());
             }
         });
 
