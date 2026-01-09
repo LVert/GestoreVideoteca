@@ -16,13 +16,17 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
     private OrdinamentoStrategy ordinamentoCorrente = new OrdinamentoPerTitolo();
 
     // campi input
-    private final JTextField titoloField = new JTextField(15);
-    private final JTextField registaField = new JTextField(15);
-    private final JTextField annoField = new JTextField(6);
+    private final JTextField titoloField = new JTextField(10);
+    private final JTextField registaField = new JTextField(10);
+    private final JTextField annoField = new JTextField(4);
 
     private final JComboBox<Genere> genereBox = new JComboBox<>(Genere.values());
     private final JComboBox<Integer> valutazioneBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5});
     private final JComboBox<StatoVisione> statoBox = new JComboBox<>(StatoVisione.values());
+
+    private final JTextField cercaField = new JTextField(12);
+    private final JComboBox<String> tipoCercaBox = new JComboBox<>(new String[]{"Titolo", "Regista"});
+    private final JButton cercaBtn = new JButton("Cerca");
 
     // ordinamento GUI
     private final JComboBox<String> sortBox = new JComboBox<>(new String[]{"Titolo", "Anno", "Valutazione"});
@@ -99,12 +103,12 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
                 System.exit(0);
             }
         });
-        setSize(950, 520);
+        setSize(1100, 520);
         setLocationRelativeTo(null);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        add(buildFormPanel(), BorderLayout.NORTH);
+        add(buildTopPanel(), BorderLayout.NORTH);
         add(new JScrollPane(table), BorderLayout.CENTER);
         add(buildButtonsPanel(), BorderLayout.SOUTH);
 
@@ -112,29 +116,32 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
         collezioneAggiornata(this.collezione.getTutti());
     }
 
-    private JPanel buildFormPanel() {
-        JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    private JPanel buildTopPanel(){
+        JPanel pannelloTop = new JPanel(new BorderLayout());
 
-        p.add(new JLabel("Titolo:"));
-        p.add(titoloField);
+        // pannello aggiunta
+        JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        addPanel.add(new JLabel("Titolo:")); addPanel.add(titoloField);
+        addPanel.add(new JLabel("Regista:")); addPanel.add(registaField);
+        addPanel.add(new JLabel("Anno:")); addPanel.add(annoField);
+        addPanel.add(new JLabel("Genere:")); addPanel.add(genereBox);
+        addPanel.add(new JLabel("Val:")); addPanel.add(valutazioneBox);
+        addPanel.add(new JLabel("Stato:")); addPanel.add(statoBox);
 
-        p.add(new JLabel("Regista:"));
-        p.add(registaField);
+        // Pannello Ricerca
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        searchPanel.setBorder(BorderFactory.createTitledBorder("Cerca"));
+        searchPanel.add(tipoCercaBox);
+        searchPanel.add(cercaField);
+        searchPanel.add(cercaBtn);
 
-        p.add(new JLabel("Anno:"));
-        p.add(annoField);
+        pannelloTop.add(addPanel, BorderLayout.WEST);
+        pannelloTop.add(searchPanel, BorderLayout.EAST);
 
-        p.add(new JLabel("Genere:"));
-        p.add(genereBox);
-
-        p.add(new JLabel("Valutazione:"));
-        p.add(valutazioneBox);
-
-        p.add(new JLabel("Stato:"));
-        p.add(statoBox);
-
-        return p;
+        return pannelloTop;
     }
+
+
 
     private JPanel buildButtonsPanel() {
         JPanel p = new JPanel();
@@ -329,10 +336,24 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
             collezioneAggiornata(collezione.getTutti());
         });
 
-        //filtri
-        applyFilterBtn.addActionListener(e -> {
-            java.util.List<FiltraStrategy> filtri = new java.util.ArrayList<>();
+        //filtri e ricerca
 
+        cercaBtn.addActionListener(e -> applyFilterBtn.doClick());
+
+        applyFilterBtn.addActionListener(e -> {
+            List<FiltraStrategy> filtri = new ArrayList<>();
+
+            //Aggiungo ricerca testuale
+            String film = cercaField.getText().trim();
+            if (!film.isEmpty()) {
+                if (tipoCercaBox.getSelectedItem().equals("Titolo")) {
+                    filtri.add(new CercaPerTitolo(film));
+                } else {
+                    filtri.add(new CercaPerRegista(film));
+                }
+            }
+
+            //Aggiungo filtri checkbox
             if (filtroGenereCheck.isSelected()) {
                 filtri.add(new FiltroPerGenere((Genere) filtroGenereBox.getSelectedItem()));
             }
@@ -343,25 +364,25 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
                 filtri.add(new FiltraPerValutazione((Integer) filtroValutazioneBox.getSelectedItem()));
             }
 
+            // Applico il FiltroComposto
             if (filtri.isEmpty()) {
-                filtroCorrente = null; // nessun filtro attivo
+                filtroCorrente = null;
             } else if (filtri.size() == 1) {
                 filtroCorrente = filtri.get(0);
             } else {
                 filtroCorrente = new FiltroComposto(filtri);
             }
 
-            // riapplico subito filtro+ordinamento allo stato attuale
             collezioneAggiornata(collezione.getTutti());
         });
 
-          // Reset filtri
+        // Reset
         resetFilterBtn.addActionListener(e -> {
             filtroCorrente = null;
+            cercaField.setText("");
             filtroGenereCheck.setSelected(false);
             filtroStatoCheck.setSelected(false);
             filtroValutazioneCheck.setSelected(false);
-
             collezioneAggiornata(collezione.getTutti());
         });
 
