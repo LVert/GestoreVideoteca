@@ -1,5 +1,9 @@
 package org.example.domain;
 
+import org.example.Persistenza.FilmRepository;
+import org.example.Strategy.FiltraStrategy;
+import org.example.Strategy.OrdinamentoStrategy;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

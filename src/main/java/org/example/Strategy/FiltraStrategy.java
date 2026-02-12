@@ -1,4 +1,6 @@
-package org.example.domain;
+package org.example.Strategy;
+
+import org.example.domain.Film;
 
 public interface FiltraStrategy {
 

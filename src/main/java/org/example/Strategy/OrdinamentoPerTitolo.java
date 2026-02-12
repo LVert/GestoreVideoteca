@@ -1,8 +1,10 @@
-package org.example.domain;
+package org.example.Strategy;
+
+import org.example.domain.Film;
 
 import java.util.Comparator;
 
-public class OrdinamentoPerTitolo implements OrdinamentoStrategy{
+public class OrdinamentoPerTitolo implements OrdinamentoStrategy {
 
     @Override
     public Comparator<Film> ordina() {

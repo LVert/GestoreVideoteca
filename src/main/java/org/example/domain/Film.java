@@ -18,6 +18,7 @@ public class Film {
                 int valutazionePersonale,
                 StatoVisione statoVisione) {
 
+
         this.titolo = titolo;
         this.regista = regista;
         this.annoUscita = annoUscita;

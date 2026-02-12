@@ -1,8 +1,10 @@
-package org.example.domain;
+package org.example.Strategy;
+
+import org.example.domain.Film;
 
 import java.util.List;
 
-public class FiltroComposto implements FiltraStrategy{
+public class FiltroComposto implements FiltraStrategy {
 
     // per combinare più filtri
 

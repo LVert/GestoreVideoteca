@@ -1,8 +1,12 @@
-package org.example.domain;
+package org.example.Persistenza;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.example.domain.Film;
+import org.example.domain.FilmBuilder;
+import org.example.domain.Genere;
+import org.example.domain.StatoVisione;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -13,7 +17,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonFilmRepository implements FilmRepository{
+public class JsonFilmRepository implements FilmRepository {
     private final Path filePath;
     private final Gson gson;
 

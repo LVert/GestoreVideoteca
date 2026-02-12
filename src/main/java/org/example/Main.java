@@ -1,7 +1,11 @@
 package org.example;
 
+import org.example.Persistenza.CsvFilmRepository;
+import org.example.Persistenza.FilmRepository;
+import org.example.Persistenza.JsonFilmRepository;
+import org.example.domain.CollezioneFilm;
 import org.example.domain.*;
-import org.example.gui.VideotecaFrame;
+import org.example.gui.CollezioneFrame;
 
 import javax.swing.SwingUtilities;
 import java.io.IOException;
@@ -19,7 +23,7 @@ public class Main {
 
             caricaDatiAllAvvio(collezione);
 
-            VideotecaFrame frame = new VideotecaFrame(collezione);
+            CollezioneFrame frame = new CollezioneFrame(collezione);
             frame.setVisible(true);
         });
     }
@@ -42,18 +46,15 @@ public class Main {
             }
         }
 
-        //Tenta il caricamento dal file CSV (senza sovrascrivere il JSON)
+        //Tenta il caricamento dal file CSV
         if (Files.exists(pathCsv)) {
             try {
                 FilmRepository repoCsv = new CsvFilmRepository("videoteca.csv");
                 List<Film> filmCaricati = repoCsv.carica();
-                int nuoviAggiunti = 0;
-                for (Film f : filmCaricati) {
-                    // aggiungiFilm ritorna true se il film è nuovo, false se era già presente
-                    if (collezione.aggiungiFilm(f)) {
-                        nuoviAggiunti++;
-                    }
+                for(Film f : filmCaricati) {
+                    collezione.aggiungiFilm(f);
                 }
+
 
             } catch (IOException e) {
                 System.err.println(" Errore caricamento CSV: " + e.getMessage());

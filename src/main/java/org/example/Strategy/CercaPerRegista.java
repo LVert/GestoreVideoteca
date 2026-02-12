@@ -1,6 +1,8 @@
-package org.example.domain;
+package org.example.Strategy;
 
-public class CercaPerRegista implements FiltraStrategy{
+import org.example.domain.Film;
+
+public class CercaPerRegista implements FiltraStrategy {
 
     private final String regista;
 

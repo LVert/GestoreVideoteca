@@ -1,4 +1,9 @@
-package org.example.domain;
+package org.example.Persistenza;
+
+import org.example.domain.Film;
+import org.example.domain.FilmBuilder;
+import org.example.domain.Genere;
+import org.example.domain.StatoVisione;
 
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
@@ -11,7 +16,7 @@ import java.util.ArrayList;
 
 
 
-public class CsvFilmRepository implements FilmRepository{
+public class CsvFilmRepository implements FilmRepository {
 
     private final Path filePath;
 

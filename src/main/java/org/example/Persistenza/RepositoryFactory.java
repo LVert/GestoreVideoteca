@@ -1,4 +1,6 @@
-package org.example.domain;
+package org.example.Persistenza;
+
+import org.example.domain.TipoPersistenza;
 
 public abstract class RepositoryFactory {
 

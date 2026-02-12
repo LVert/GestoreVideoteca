@@ -1,5 +1,8 @@
 package org.example.gui;
 
+import org.example.Persistenza.FilmRepository;
+import org.example.Persistenza.RepositoryFactory;
+import org.example.Strategy.*;
 import org.example.domain.*;
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
+public class CollezioneFrame extends JFrame implements CollezioneFilmObserver {
 
     private final CollezioneFilm collezione;
     private final FilmTableModel tableModel = new FilmTableModel();
@@ -50,7 +53,7 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
         return factory.creaFilmRepository();
     }
 
-    public VideotecaFrame(CollezioneFilm collezione) {
+    public CollezioneFrame(CollezioneFilm collezione) {
         super("Gestione Videoteca");
         this.collezione = collezione;
         this.collezione.aggiungiObserver(this);
@@ -61,7 +64,7 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
             public void windowClosing(java.awt.event.WindowEvent e) {
 
                 int scelta = JOptionPane.showConfirmDialog(
-                        VideotecaFrame.this,
+                        CollezioneFrame.this,
                         "Vuoi salvare la collezione prima di uscire?",
                         "Uscita",
                         JOptionPane.YES_NO_CANCEL_OPTION
@@ -89,7 +92,7 @@ public class VideotecaFrame extends JFrame implements CollezioneFilmObserver {
 
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(
-                                VideotecaFrame.this,
+                                CollezioneFrame.this,
                                 "Errore durante il salvataggio o la migrazione: " + ex.getMessage(),
                                 "Errore",
                                 JOptionPane.ERROR_MESSAGE

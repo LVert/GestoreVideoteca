@@ -1,4 +1,7 @@
-package org.example.domain;
+package org.example.Strategy;
+
+import org.example.domain.Film;
+import org.example.domain.Genere;
 
 public class FiltroPerGenere implements FiltraStrategy {
 

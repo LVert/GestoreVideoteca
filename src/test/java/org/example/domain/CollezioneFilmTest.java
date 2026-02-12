@@ -1,5 +1,9 @@
 package org.example.domain;
 
+import org.example.Persistenza.CsvFilmRepository;
+import org.example.Persistenza.FilmRepository;
+import org.example.Persistenza.JsonFilmRepository;
+import org.example.Strategy.*;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;

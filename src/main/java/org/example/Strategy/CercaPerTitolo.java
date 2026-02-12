@@ -1,6 +1,8 @@
-package org.example.domain;
+package org.example.Strategy;
 
-public class CercaPerTitolo implements FiltraStrategy{
+import org.example.domain.Film;
+
+public class CercaPerTitolo implements FiltraStrategy {
 
     private final String titolo;
 

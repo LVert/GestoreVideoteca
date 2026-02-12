@@ -1,4 +1,4 @@
-package org.example.domain;
+package org.example.Persistenza;
 
 public class CsvRepositoryFactory extends RepositoryFactory {
 

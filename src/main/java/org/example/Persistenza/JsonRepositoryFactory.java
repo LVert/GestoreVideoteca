@@ -1,6 +1,6 @@
-package org.example.domain;
+package org.example.Persistenza;
 
-public class JsonRepositoryFactory extends RepositoryFactory{
+public class JsonRepositoryFactory extends RepositoryFactory {
 
 
     @Override
