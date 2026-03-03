@@ -50,11 +50,12 @@ public class CollezioneFrame extends JFrame implements CollezioneFilmObserver {
     private FilmRepository repositorySelezionata() {
         TipoPersistenza tipo = (TipoPersistenza) formatoBox.getSelectedItem();
         RepositoryFactory factory = RepositoryFactory.getFactory(tipo);
-        return factory.creaFilmRepository();
+        // Chiama il factory method non-statico (polimorfismo)
+        return factory.creaRepository();
     }
 
     public CollezioneFrame(CollezioneFilm collezione) {
-        super("Gestione Videoteca");
+        super("Gestore Videoteca");
         this.collezione = collezione;
         this.collezione.aggiungiObserver(this);
 
@@ -76,14 +77,14 @@ public class CollezioneFrame extends JFrame implements CollezioneFilmObserver {
 
                 if (scelta == JOptionPane.YES_OPTION) {
                     try {
-                        // 1. Identifica il tipo selezionato e il repository
+                        // Identifica il tipo selezionato e il repository
                         TipoPersistenza tipoScelto = (TipoPersistenza) formatoBox.getSelectedItem();
                         FilmRepository repo = repositorySelezionata();
 
-                        // 2. Salva la collezione nel formato attuale
+                        // Salva la collezione nel formato attuale
                         collezione.salvaSuRepository(repo);
 
-                        // 3. LOGICA DI MIGRAZIONE: Elimina il file del formato non utilizzato
+                        //Elimina il file del formato non utilizzato
                         if (tipoScelto == TipoPersistenza.JSON) {
                             java.nio.file.Files.deleteIfExists(java.nio.file.Path.of("videoteca.csv"));
                         } else if (tipoScelto == TipoPersistenza.CSV) {
@@ -93,11 +94,11 @@ public class CollezioneFrame extends JFrame implements CollezioneFilmObserver {
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(
                                 CollezioneFrame.this,
-                                "Errore durante il salvataggio o la migrazione: " + ex.getMessage(),
+                                "Errore durante il salvataggio" + ex.getMessage(),
                                 "Errore",
                                 JOptionPane.ERROR_MESSAGE
                         );
-                        return; // Non chiudere l'app se il salvataggio fallisce
+                        return; // Non chiude l'app se il salvataggio fallisce
                     }
                 }
 
@@ -194,7 +195,7 @@ public class CollezioneFrame extends JFrame implements CollezioneFilmObserver {
         //aggiunta
         addBtn.addActionListener(e -> {
             try {
-                Film film = new FilmBuilder()
+                Film film = new Film.FilmBuilder()
                         .titolo(titoloField.getText())
                         .regista(registaField.getText())
                         .annoUscita(Integer.parseInt(annoField.getText()))
@@ -205,7 +206,7 @@ public class CollezioneFrame extends JFrame implements CollezioneFilmObserver {
 
                 boolean ok = collezione.aggiungiFilm(film);
                 if (!ok) {
-                    JOptionPane.showMessageDialog(this, "Film già presente (titolo + regista).");
+                    JOptionPane.showMessageDialog(this, "Film già presente");
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Errore: " + ex.getMessage());
@@ -274,7 +275,7 @@ public class CollezioneFrame extends JFrame implements CollezioneFilmObserver {
 
             if (result == JOptionPane.OK_OPTION) {
                 try {
-                    Film aggiornato = new FilmBuilder()
+                    Film aggiornato = new Film.FilmBuilder()
                             .titolo(titolo.getText())
                             .regista(regista.getText())
                             .annoUscita(Integer.parseInt(anno.getText()))

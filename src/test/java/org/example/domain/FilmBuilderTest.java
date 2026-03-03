@@ -8,7 +8,7 @@ public class FilmBuilderTest {
 
     @Test
     public void creaFilmTest() {
-        Film film = new FilmBuilder()
+        Film film = new Film.FilmBuilder()
                 .titolo("Will hunting - Genio Ribelle")
                 .regista("Gus Van Sant")
                 .annoUscita(1997)
@@ -28,7 +28,7 @@ public class FilmBuilderTest {
     @Test
     public void testAnnoUscita() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                new FilmBuilder()
+                new Film.FilmBuilder()
                 .titolo("Will hunting - Genio Ribelle")
                 .regista("Gus Van Sant")
                 .annoUscita(1800)

@@ -21,7 +21,7 @@ public class CollezioneFilmTest {
     public void aggiungiFilmTest(){
         CollezioneFilm collezione = new CollezioneFilm();
 
-        Film f = new FilmBuilder()
+        Film f = new Film.FilmBuilder()
                 .titolo("L'attimo fuggente")
                 .regista("Peter Weir")
                 .annoUscita(1989)
@@ -39,7 +39,7 @@ public class CollezioneFilmTest {
     @Test
     public void rimuoviFilmTest(){
         CollezioneFilm collezione = new CollezioneFilm();
-        Film f1 = new FilmBuilder()
+        Film f1 = new Film.FilmBuilder()
                 .titolo("L'attimo fuggente")
                 .regista(("Peter Weir"))
                 .annoUscita(1989)
@@ -47,7 +47,7 @@ public class CollezioneFilmTest {
                 .valutazione(5)
                 .stato(StatoVisione.VISTO)
                 .build();
-        Film f2 = new FilmBuilder()
+        Film f2 = new Film.FilmBuilder()
                 .titolo("Bastardi senza gloria")
                 .regista("Quentin Tarantino")
                 .annoUscita(2009)
@@ -69,7 +69,7 @@ public class CollezioneFilmTest {
     public void trovaTest(){
         CollezioneFilm collezione = new CollezioneFilm();
 
-        Film f1 = new FilmBuilder()
+        Film f1 = new Film.FilmBuilder()
                 .titolo("L'attimo fuggente")
                 .regista("Peter Weir")
                 .annoUscita(1989)
@@ -78,7 +78,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film f2 = new FilmBuilder()
+        Film f2 = new Film.FilmBuilder()
                 .titolo("Bastardi senza gloria")
                 .regista("Quentin Tarantino")
                 .annoUscita(2009)
@@ -102,7 +102,7 @@ public class CollezioneFilmTest {
     public void aggiornaFilmTest(){
         CollezioneFilm collezione = new CollezioneFilm();
 
-        Film precedente = new FilmBuilder()
+        Film precedente = new Film.FilmBuilder()
                 .titolo("Matrix")
                 .regista("The Wachowskis")
                 .annoUscita(1999)
@@ -113,7 +113,7 @@ public class CollezioneFilmTest {
 
         collezione.aggiungiFilm(precedente);
 
-        Film aggiornato  = new FilmBuilder()
+        Film aggiornato  = new Film.FilmBuilder()
                 .titolo("Bastardi senza gloria")
                 .regista("Quentin Tarantino")
                 .annoUscita(2009)
@@ -141,7 +141,7 @@ public class CollezioneFilmTest {
 
         CollezioneFilm collezione = new CollezioneFilm();
 
-        Film film1 = new FilmBuilder()
+        Film film1 = new Film.FilmBuilder()
                 .titolo("Il Signore degli Anelli: Le Due Torri")
                 .regista("Peter Jackson")
                 .annoUscita(2002)
@@ -150,7 +150,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film2 = new FilmBuilder()
+        Film film2 = new Film.FilmBuilder()
                 .titolo("Il Signore degli Anelli: La Compagnia dell'Anello")
                 .regista("Peter Jackson")
                 .annoUscita(2001)
@@ -159,7 +159,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film3 = new FilmBuilder()
+        Film film3 = new Film.FilmBuilder()
                 .titolo("Harry Potter e la Pietra Filosofale")
                 .regista("Chris Columbus")
                 .annoUscita(2001)
@@ -185,7 +185,7 @@ public class CollezioneFilmTest {
     public void cercaPerRegistaTest(){
         CollezioneFilm collezione = new CollezioneFilm();
 
-        Film film1 = new FilmBuilder()
+        Film film1 = new Film.FilmBuilder()
                 .titolo("Kill Bill")
                 .regista("Quentin Tarantino")
                 .annoUscita(2003)
@@ -194,7 +194,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film2 = new FilmBuilder()
+        Film film2 = new Film.FilmBuilder()
                 .titolo("Pulp Fiction")
                 .regista("Quentin Tarantino")
                 .annoUscita(1994)
@@ -203,7 +203,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film3 = new FilmBuilder()
+        Film film3 = new Film.FilmBuilder()
                 .titolo("The Departed")
                 .regista("Martin Scorsese")
                 .annoUscita(2006)
@@ -230,7 +230,7 @@ public class CollezioneFilmTest {
 
         CollezioneFilm collezione = new CollezioneFilm();
 
-        Film film1 = new FilmBuilder()
+        Film film1 = new Film.FilmBuilder()
                 .titolo("Il Signore degli Anelli: Le Due Torri")
                 .regista("Peter Jackson")
                 .annoUscita(2002)
@@ -239,7 +239,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film2 = new FilmBuilder()
+        Film film2 = new Film.FilmBuilder()
                 .titolo("Il Signore degli Anelli: La Compagnia dell'Anello")
                 .regista("Peter Jackson")
                 .annoUscita(2001)
@@ -248,7 +248,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film3 = new FilmBuilder()
+        Film film3 = new Film.FilmBuilder()
                 .titolo("Harry Potter e la Pietra Filosofale")
                 .regista("Chris Columbus")
                 .annoUscita(2001)
@@ -274,7 +274,7 @@ public class CollezioneFilmTest {
     public void ordinaPerAnnoTest(){
         CollezioneFilm collezione = new CollezioneFilm();
 
-        Film film1 = new FilmBuilder()
+        Film film1 = new Film.FilmBuilder()
                 .titolo("Kill Bill")
                 .regista("Quentin Tarantino")
                 .annoUscita(2003)
@@ -283,7 +283,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film2 = new FilmBuilder()
+        Film film2 = new Film.FilmBuilder()
                 .titolo("Pulp Fiction")
                 .regista("Quentin Tarantino")
                 .annoUscita(1994)
@@ -292,7 +292,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film3 = new FilmBuilder()
+        Film film3 = new Film.FilmBuilder()
                 .titolo("The Departed")
                 .regista("Martin Scorsese")
                 .annoUscita(2006)
@@ -317,7 +317,7 @@ public class CollezioneFilmTest {
     public void filtraPerGenereTest(){
         CollezioneFilm collezione = new CollezioneFilm();
 
-        Film film1 = new FilmBuilder()
+        Film film1 = new Film.FilmBuilder()
                 .titolo("Il Signore degli Anelli: La Compagnia dell'Anello")
                 .regista("Peter Jackson")
                 .annoUscita(2001)
@@ -326,7 +326,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film2 = new FilmBuilder()
+        Film film2 = new Film.FilmBuilder()
                 .titolo("The Matrix")
                 .regista("The Wachowskis")
                 .annoUscita(1999)
@@ -335,7 +335,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film film3 = new FilmBuilder()
+        Film film3 = new Film.FilmBuilder()
                 .titolo("Pulp Fiction")
                 .regista("Quentin Tarantino")
                 .annoUscita(1994)
@@ -368,7 +368,7 @@ public class CollezioneFilmTest {
         // collezione 1 -> salva
         CollezioneFilm collezione1 = new CollezioneFilm();
 
-        Film f1 = new FilmBuilder()
+        Film f1 = new Film.FilmBuilder()
                 .titolo("Matrix")
                 .regista("The Wachowskis")
                 .annoUscita(1999)
@@ -377,7 +377,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film f2 = new FilmBuilder()
+        Film f2 = new Film.FilmBuilder()
                 .titolo("Inception")
                 .regista("Christopher Nolan")
                 .annoUscita(2010)
@@ -406,7 +406,7 @@ public class CollezioneFilmTest {
         File jsonFile = tempFolder.newFile("videoteca_replace.json");
         FilmRepository repo = new JsonFilmRepository(jsonFile.getAbsolutePath());
 
-        Film salvato = new FilmBuilder()
+        Film salvato = new Film.FilmBuilder()
                 .titolo("Pulp Fiction")
                 .regista("Quentin Tarantino")
                 .annoUscita(1994)
@@ -422,7 +422,7 @@ public class CollezioneFilmTest {
 
         // collezione target parte con un altro film
         CollezioneFilm collezioneTarget = new CollezioneFilm();
-        Film diverso = new FilmBuilder()
+        Film diverso = new Film.FilmBuilder()
                 .titolo("Film Diverso")
                 .regista("Regista Diverso")
                 .annoUscita(2000)
@@ -451,7 +451,7 @@ public class CollezioneFilmTest {
 
         CollezioneFilm collezione1 = new CollezioneFilm();
 
-        Film f1 = new FilmBuilder()
+        Film f1 = new Film.FilmBuilder()
                 .titolo("Matrix")
                 .regista("The Wachowskis")
                 .annoUscita(1999)
@@ -460,7 +460,7 @@ public class CollezioneFilmTest {
                 .stato(StatoVisione.VISTO)
                 .build();
 
-        Film f2 = new FilmBuilder()
+        Film f2 = new Film.FilmBuilder()
                 .titolo("Inception")
                 .regista("Christopher Nolan")
                 .annoUscita(2010)
@@ -488,7 +488,7 @@ public class CollezioneFilmTest {
         File csvFile = tempFolder.newFile("videoteca_replace.csv");
         FilmRepository repo = new CsvFilmRepository(csvFile.getAbsolutePath());
 
-        Film salvato = new FilmBuilder()
+        Film salvato = new Film.FilmBuilder()
                 .titolo("Pulp Fiction")
                 .regista("Quentin Tarantino")
                 .annoUscita(1994)
@@ -504,7 +504,7 @@ public class CollezioneFilmTest {
 
         // collezione target parte con un altro film
         CollezioneFilm collezioneTarget = new CollezioneFilm();
-        Film diverso = new FilmBuilder()
+        Film diverso = new Film.FilmBuilder()
                 .titolo("Film Diverso")
                 .regista("Regista Diverso")
                 .annoUscita(2000)

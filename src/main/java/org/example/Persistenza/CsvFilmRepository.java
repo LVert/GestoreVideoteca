@@ -1,7 +1,6 @@
 package org.example.Persistenza;
 
 import org.example.domain.Film;
-import org.example.domain.FilmBuilder;
 import org.example.domain.Genere;
 import org.example.domain.StatoVisione;
 
@@ -50,7 +49,7 @@ public class CsvFilmRepository implements FilmRepository {
     public List<Film> carica() throws IOException {
         List<Film> result = new ArrayList<>();
         if (!Files.exists(filePath)) {
-            return result; // nessun file: collezione vuota
+            return result;
         }
 
         try (BufferedReader reader = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
@@ -68,7 +67,7 @@ public class CsvFilmRepository implements FilmRepository {
                 int valutazione = Integer.parseInt(parts[4]);
                 StatoVisione stato = StatoVisione.valueOf(parts[5]);
 
-                Film film = new FilmBuilder()
+                Film film = new Film.FilmBuilder()
                         .titolo(titolo)
                         .regista(regista)
                         .annoUscita(anno)

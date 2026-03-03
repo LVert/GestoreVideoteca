@@ -2,7 +2,7 @@ package org.example.Strategy;
 
 import org.example.domain.Film;
 
-public class CercaPerRegista implements FiltraStrategy {
+public class    CercaPerRegista implements FiltraStrategy {
 
     private final String regista;
 
